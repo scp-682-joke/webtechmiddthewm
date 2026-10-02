@@ -1,0 +1,412 @@
+:root {
+    --background: #111416;
+    --surface: #1b2023;
+    --border: #343b3f;
+    --text: #f0f2ed;
+    --muted: #a5afad;
+    --accent: #e96b32;
+    --orange-hover: #f5824a;
+    --content-width: 1180px;
+    --space: 1.5rem;
+    --radius: 1rem;
+}
+
+/* Shared foundations for all five pages. */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 5px;
+}
+
+h1, h2, h3 {
+    line-height: 1.1;
+    font-weight: 700;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+.container {
+    width: min(100% - 3rem, var(--content-width));
+    padding-inline: 0;
+    margin-inline: auto;
+}
+
+.page-container {
+    /* Scale spacing between 2rem on phones and 4rem on wider screens.
+    We need this to prevent different spacing between separate pages.
+    Use it inside <main> !*/
+    padding-block: clamp(2rem, 5vw, 4rem);
+}
+
+.button {
+    display: inline-flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: .9rem 1.3rem;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    background: var(--accent);
+    color: #141414;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: var(--orange-hover);
+    color: #141414;
+}
+/* you can try to decor your page with this,
+or make similiar section with this color palette
+this would theoretically help you navigate with page coloring */
+.card {
+    padding: var(--space);
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+/* Reusable navigation wraps */
+.site-header {
+    border-bottom: 1px solid var(--border);
+}
+
+.site-nav {
+    min-height: 94px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    white-space: nowrap;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: .6rem;
+    background: var(--accent);
+    color: #111;
+    font-size: 1.7rem;
+    letter-spacing: -.1em;
+    padding-right: .2rem;
+}
+
+.brand-subtitle {
+    color: var(--muted);
+    font-size: .65rem;
+    font-weight: 400;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.nav-links a {
+    display: block;
+    padding: .8rem 0;
+}
+
+.nav-links a[aria-current="page"] {
+    color: var(--text);
+    box-shadow: 0 2px var(--accent);
+}
+
+/* Bootstrap's row and columns handle the main responsive layout. */
+.eyebrow {
+    color: var(--muted);
+    font-size: .65rem;
+    letter-spacing: .17em;
+    font-weight: 700;
+}
+
+.key-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: .4rem;
+}
+
+h1 {
+    font-size: clamp(3rem, 5.2vw, 4.4rem);
+    letter-spacing: -.055em;
+    margin: 1.5rem 0;
+}
+
+h1 span {
+    color: var(--accent);
+}
+
+.intro-copy {
+    max-width: 360px;
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-guide {
+    margin-top: 3.5rem;
+    max-width: 380px;
+}
+
+.quick-guide ol {
+    padding: 0;
+    list-style: none;
+    font-size: .8rem;
+}
+
+.quick-guide li {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: .7rem;
+}
+
+.quick-guide li span {
+    color: var(--accent);
+    font-size: .7rem;
+}
+
+
+.panel-heading, .explorer-key {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.panel-heading h2 {
+    font-size: .85rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+.anatomy-container {
+    position: relative;
+    width: min(100%, 350px);
+    margin: .8rem auto;
+}
+
+.body-base {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Clip paths limit each link's hover area. No image mask: this also works from a local HTML file. */
+.body-part {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+}
+
+.body-part img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Recolor a copy of the base to approximately #e96b32, preserving its exact alpha outline. */
+.part-hover {
+    opacity: 0;
+    filter: brightness(0) invert(.549) sepia(.258) saturate(15.465) hue-rotate(331.187deg) brightness(.914);
+}
+
+.body-part:hover .part-hover, .body-part:focus-visible .part-hover {
+    opacity: 1;
+}
+
+/* Keep the link transparent so only the selected PNG changes color. */
+.body-part:focus-visible {
+    outline: none;
+}
+
+.left-arm {
+    clip-path: polygon(28% 18%, 37% 18%, 42% 20%, 43% 24%, 40% 28%, 40% 31%, 35% 34%, 33% 43%, 28% 58%, 21% 58%, 24% 36%, 28% 26%);
+}
+
+.right-arm {
+    clip-path: polygon(63% 18%, 72% 18%, 72% 26%, 76% 36%, 79% 58%, 72% 58%, 67% 43%, 65% 34%, 60% 31%, 60% 28%, 57% 24%, 58% 20%);
+}
+
+/* Full-size layers share one coordinate space; no per-image offsets or stretching. */
+.left-leg {
+    clip-path: polygon(35% 50%, 50% 50%, 50% 97%, 32% 97%, 32% 60%);
+}
+
+.right-leg {
+    clip-path: polygon(50% 50%, 65% 50%, 68% 60%, 68% 97%, 50% 97%);
+}
+
+.abs {
+    clip-path: polygon(36% 34%, 64% 34%, 65% 43%, 63% 50%, 37% 50%, 35% 43%);
+}
+
+.explorer-key {
+    color: var(--muted);
+    font-size: .65rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+}
+
+.muscle-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .7rem;
+    margin-top: .7rem;
+}
+
+.muscle-links a {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .8rem;
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+    font-size: .8rem;
+}
+
+.muscle-links a span:first-child {
+    color: var(--muted);
+    font-size: .6rem;
+}
+
+.muscle-links a span:last-child {
+    margin-left: auto;
+    color: var(--accent);
+}
+
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
+    padding-block: 1.3rem;
+    font-size: .65rem;
+    color: var(--muted);
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.site-footer span {
+    margin-left: 1rem;
+}
+
+@media (max-width: 991px) {
+    .site-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding-block: 1rem;
+    }
+
+    .introduction {
+        text-align: center;
+    }
+
+    .intro-copy, .quick-guide {
+        margin-inline: auto;
+    }
+
+    .quick-guide {
+        margin-top: 2rem;
+    }
+
+    .quick-guide li {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 575px) {
+    .container {
+        width: calc(100% - 2rem);
+    }
+
+    .site-nav {
+        justify-content: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: .5rem;
+        font-size: .75rem;
+    }
+
+    .anatomy-panel {
+        padding: 1rem;
+    }
+
+    .muscle-links a {
+        padding: .65rem;
+        gap: .4rem;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .site-footer span {
+        display: block;
+        margin: .2rem 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

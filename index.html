@@ -1,17 +1,72 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore muscle groups and discover your next workout with Form Fitness.">
+    <title>Form Fitness</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="container site-nav" aria-label="Main navigation">
+            <a class="brand" href="index.html" aria-label="Form Fitness home"><span class="brand-mark" aria-hidden="true">f.</span> FORM <span class="brand-subtitle">FITNESS</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html" aria-current="page">Home</a></li>
+                <li><a href="page 2/index.html">Info</a></li>
+                <li><a href="page 3/index.html">Nutrition</a></li>
+                <li><a href="page 4/index.html">Plan</a></li>
+                <li><a href="page 5/index.html">Page 5</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="main" class="container page-container">
+        <div class="row g-5 align-items-center">
+            <section class="col-lg-5 introduction" aria-labelledby="page-title">
+                <h1 id="page-title">Choose a<br>muscle <span>group.</span></h1>
+                <p class="intro-copy">A little knowledge. A stronger you.<br>Explore your body and discover where your next workout begins.</p>
+                <a class="button" href="#muscle-groups">Explore muscle groups <span aria-hidden="true">↗</span></a>
+                <div class="quick-guide">
+                    <p class="eyebrow">HOW IT WORKS</p>
+                    <ol>
+                        <li><span>01</span> Hover or focus to highlight a muscle group.</li>
+                        <li><span>02</span> Select it to open its exercise guide.</li>
+                    </ol>
+                </div>
+            </section>
+            <section id="muscle-groups" class="col-lg-7" aria-labelledby="anatomy-title">
+                <div class="card">
+                    <div class="panel-heading"><h2 id="anatomy-title">Anatomy explorer</h2></div>
+                    <div class="anatomy-container">
+                        <img class="body-base" src="images/body-white.png" alt="Front-facing human body with selectable arms, legs, and abdominal muscles" width="1024" height="1536">
+                        <!-- Each region reuses the base silhouette, so its outline stays aligned at every size. -->
+                        <a class="body-part left-arm" href="page 2/index.html#arms" aria-label="Open exercises for left arm">
+                            <img class="part-hover" src="images/body-white.png" alt="" width="1024" height="1536">
+                        </a>
+                        <a class="body-part right-arm" href="page 2/index.html#arms" aria-label="Open exercises for right arm">
+                            <img class="part-hover" src="images/body-white.png" alt="" width="1024" height="1536">
+                        </a>
+                        <a class="body-part left-leg" href="page 2/index.html#legs" aria-label="Open exercises for left leg">
+                            <img class="part-hover" src="images/body-white.png" alt="" width="1024" height="1536">
+                        </a>
+                        <a class="body-part right-leg" href="page 2/index.html#legs" aria-label="Open exercises for right leg">
+                            <img class="part-hover" src="images/body-white.png" alt="" width="1024" height="1536">
+                        </a>
+                        <a class="body-part abs" href="page 2/index.html#abs" aria-label="Open exercises for abs">
+                            <img class="part-hover" src="images/body-white.png" alt="" width="1024" height="1536">
+                        </a>
+                    </div>
+                    <div class="explorer-key"><span><i class="key-dot" aria-hidden="true"></i> Hover to explore</span><span>FRONT VIEW</span></div>
+                </div>
+                <div class="muscle-links" aria-label="Muscle group shortcuts">
+                    <a href="page 2/index.html#arms"><span>01</span> Arms <span aria-hidden="true">↗</span></a>
+                    <a href="page 2/index.html#abs"><span>02</span> Abs <span aria-hidden="true">↗</span></a>
+                    <a href="page 2/index.html#legs"><span>03</span> Legs <span aria-hidden="true">↗</span></a>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="container site-footer"><p>FORM FITNESS <span>Build knowledge. Build strength.</span></p><p>A mindful approach to movement.</p></footer>
+</body>
 </html>
