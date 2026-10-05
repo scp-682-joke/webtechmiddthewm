@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+span{
+    color: var(--accent);
+}
+
 .calorie-guide {
     margin-top: 2rem;
 }
@@ -86,6 +90,6 @@
     max-width: 800px;
     margin: 40px auto 30px;
     text-align: center;
-    font-size: 18px;
+    font-size: 0.87rem;
     line-height: 1.6;
 }
