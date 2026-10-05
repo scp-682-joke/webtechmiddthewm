@@ -1,0 +1,32 @@
+.info {
+    max-width: 680px;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.calorie-guide {
+    margin-top: 2rem;
+}
+
+.calorie-guide ul {
+    list-style: none;
+    padding: 0;
+    margin-block: 1.5rem;
+}
+
+.calorie-guide li {
+    margin-bottom: .6rem;
+}
+
+.calorie-source {
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.calorie-source a {
+    text-decoration: underline;
+}
+
+.calorie-comments{
+    font-size: 0.85rem;
+}
