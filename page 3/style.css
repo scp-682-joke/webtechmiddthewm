@@ -1,73 +1,42 @@
-.nutrition-section {
-    padding: 40px 20px;
-}
+:root { --bmi-accent: #f36d30; --bmi-text: #f6f7f7; --bmi-muted: #aab4b8; --bmi-line: #343c40; --bmi-panel: #1b2023; }
+.nutrition-main { max-width: 1190px; padding-top: 48px; padding-bottom: 72px; color: var(--bmi-text); }
+.intro { text-align: center; margin-bottom: 36px; }
+.eyebrow { font-size: .7rem; letter-spacing: .18em; font-weight: 800; color: #f78a56; }
+.pulse-dot { display: inline-block; width: 7px; height: 7px; background: var(--bmi-accent); border-radius: 50%; margin-right: 7px; }
+.intro h1 { font-size: clamp(2.4rem,5.3vw,4.1rem); font-weight: 850; letter-spacing: -.05em; margin: 14px 0; }
+.intro h1 em { font-style: normal; color: var(--bmi-accent); }
+.intro p { color: var(--bmi-muted); font-size: 1.04rem; }
+.nutrition-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.glass-panel { background: var(--bmi-panel); border: 1px solid var(--bmi-line); border-radius: 20px; padding: 29px; box-shadow: 0 18px 48px rgba(0,0,0,.12); }
+.section-heading { display: flex; align-items: center; gap: 13px; margin-bottom: 27px; }
+.step-chip { display: grid; place-items: center; width: 43px; height: 43px; flex: none; background: rgba(243,109,48,.11); color: var(--bmi-accent); border: 1px solid rgba(243,109,48,.3); border-radius: 13px; font-weight: 800; }
+.section-heading h2 { font-size: 1.23rem; font-weight: 800; margin: 0 0 3px; }
+.section-heading p { margin: 0; color: var(--bmi-muted); font-size: .82rem; }
+.field { margin-bottom: 19px; }
+.field label { display: block; font-size: .9rem; font-weight: 700; margin-bottom: 8px; color: #e8eeef; }
+.required { color: var(--bmi-accent); }.optional { color: var(--bmi-muted); font-weight: 400; font-size: .8rem; }
+.input-shell { display: flex; align-items: center; background: #151a1d; border: 1px solid #3b4449; border-radius: 10px; overflow: hidden; transition: border-color .15s,box-shadow .15s; }
+.input-shell:focus-within { border-color: var(--bmi-accent); box-shadow: 0 0 0 3px rgba(243,109,48,.12); }
+.input-shell input,.input-shell select { width: 100%; min-width: 0; background: transparent; border: 0; color: #fff; padding: 13px 14px; outline: none; font-size: .95rem; }
+.input-shell select option { color: #111; }.input-shell input::placeholder,textarea::placeholder { color: #7f8a8f; }
+.unit { color: #e8a07b; font-size: .79rem; font-weight: 800; padding-right: 14px; }
+.measurement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.field textarea { display: block; width: 100%; background: #151a1d; border: 1px solid #3b4449; border-radius: 10px; color: #fff; padding: 13px 14px; outline: none; resize: vertical; }
+.field textarea:focus { border-color: var(--bmi-accent); box-shadow: 0 0 0 3px rgba(243,109,48,.12); }
+.field-footer { display: flex; justify-content: space-between; gap: 8px; color: var(--bmi-muted); font-size: .7rem; margin-top: 7px; }
+.field-error { color: #ff9d99; font-size: .78rem; margin: 5px 0 0; min-height: 0; }.field-error:empty { display: none; }
+.input-shell.is-invalid { border-color: #ff8585; }.field textarea.is-invalid { border-color: #ff8585; }
+.button-row { display: flex; gap: 10px; margin-top: 24px; }
+.calculate-btn { flex: 1; display: flex; justify-content: space-between; align-items: center; background: var(--bmi-accent); color: #161616; font-weight: 800; border: 0; border-radius: 10px; padding: 15px 17px; transition: transform .15s,background .15s; }
+.calculate-btn:hover { background: #ff8750; transform: translateY(-1px); }.reset-btn { color: #f6f7f7; border: 1px solid #465158; border-radius: 10px; padding: 13px 17px; background: transparent; }.reset-btn:hover { border-color: var(--bmi-accent); }
+.form-message { color: #b2edc4; font-size: .85rem; margin: 10px 0 0; min-height: 0; }.form-message:empty { display: none; }
+.empty-state { text-align: center; padding: 50px 14px 60px; }.empty-orbit { width: 135px; height: 135px; border: 1px dashed #49535a; border-radius: 50%; margin: 0 auto 25px; display: grid; place-items: center; }.empty-orbit-inner { width: 86px; height: 86px; border-radius: 50%; background: #262d31; color: var(--bmi-accent); display: grid; place-items: center; font-size: 3rem; }.empty-state h3 { font-size: 1.25rem; font-weight: 800; }.empty-state p { color: var(--bmi-muted); max-width: 250px; margin: 10px auto; font-size: .9rem; }
+.score-area { text-align: center; padding: 15px 0 24px; }.score-label { color: var(--bmi-muted); font-size: .7rem; font-weight: 800; letter-spacing: .13em; }.score-number { font-size: clamp(4.8rem,9vw,7.5rem); font-weight: 850; line-height: 1.13; letter-spacing: -.08em; font-variant-numeric: tabular-nums; }.category-pill { display: inline-flex; padding: 8px 18px; border-radius: 100px; background: rgba(67,197,139,.14); color: #7ee7ad; font-weight: 800; font-size: .88rem; }
+.scale-block { margin: 12px 0 22px; }.scale-heading { display: flex; justify-content: space-between; color: #d8e0e2; font-size: .8rem; font-weight: 750; margin-bottom: 13px; }.scale-track { position: relative; height: 12px; border-radius: 12px; background: linear-gradient(to right,#67aef2 0%,#67aef2 25%,#4bc78b 25%,#4bc78b 50%,#f7c768 50%,#f7c768 75%,#ed7b68 75%,#ed7b68 100%); }.scale-marker { position: absolute; top: 50%; left: 0%; width: 20px; height: 20px; border: 4px solid white; background: #202428; border-radius: 50%; transform: translate(-50%,-50%); box-shadow: 0 2px 10px #0008; transition: left .45s ease; }.scale-labels { display: grid; grid-template-columns: repeat(4,1fr); gap: 4px; margin-top: 11px; color: var(--bmi-muted); font-size: .64rem; text-align: center; }.insight-card { display: flex; gap: 12px; align-items: start; background: #252c30; border: 1px solid #3a4448; border-radius: 13px; padding: 17px; }.insight-icon { color: var(--bmi-accent); font-size: 1.3rem; }.insight-card p { margin: 0; color: #dce3e5; font-size: .87rem; line-height: 1.65; }
+.details-toggle { display: flex; width: 100%; justify-content: space-between; margin-top: 20px; padding: 13px 0; border: 0; border-bottom: 1px solid #394146; background: transparent; color: #f3f5f6; font-weight: 700; font-size: .85rem; }.details-toggle:hover { color: var(--bmi-accent); }.details-content { padding: 15px 0; color: var(--bmi-muted); font-size: .85rem; line-height: 1.6; }.details-content p:last-child { margin-bottom: 0; }.disclaimer { border-top: 1px solid var(--bmi-line); margin: 24px 0 0; padding-top: 18px; color: var(--bmi-muted); font-size: .75rem; line-height: 1.65; }
+.history-section { margin-top: 20px; }.history-head { display: flex; justify-content: space-between; align-items: center; gap: 15px; }.history-head h2 { font-size: 1.2rem; font-weight: 800; margin: 6px 0 0; }.clear-history { background: transparent; color: var(--bmi-muted); border: 1px solid #485158; border-radius: 8px; padding: 9px 13px; font-size: .8rem; }.clear-history:hover { color: white; border-color: var(--bmi-accent); }.history-note,.history-empty { color: var(--bmi-muted); font-size: .8rem; margin: 10px 0; }.history-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }.history-item { background: #151a1d; border: 1px solid #364045; border-radius: 12px; padding: 15px; }.history-item strong { font-size: 1.45rem; }.history-item span { color: var(--bmi-muted); font-size: .78rem; display: block; }.history-item small { color: #f7a37c; }
+[hidden] { display: none !important; }
+@media(max-width: 860px) { .nutrition-layout { grid-template-columns: 1fr; }.nutrition-main { max-width: 700px; }.history-list { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width: 500px) { .nutrition-main { padding-top: 30px; }.glass-panel { padding: 20px; border-radius: 15px; }.measurement-grid { gap: 10px; }.history-list { grid-template-columns: 1fr; }.intro h1 { font-size: 2.4rem; }.scale-labels { font-size: .57rem; } }
 
-.nutrition-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.nutrition-form .form-label {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-.nutrition-form .form-control,
-.nutrition-form .form-select {
-    background-color: transparent;
-    color: inherit;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-}
-
-.nutrition-form .form-control::placeholder {
-    color: var(--muted);
-}
-
-.nutrition-form .form-control:focus,
-.nutrition-form .form-select:focus {
-    background-color: transparent;
-    color: inherit;
-    border-color: var(--accent);
-    box-shadow: none;
-}
-
-.nutrition-form .form-select option {
-    color: black;
-}
-
-.submit-button {
-    background: var(--accent);
-    color: black;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-}
-
-.submit-button:hover {
-    background: var(--orange-hover);
-    color: black;
-}
-
-/* Tablet */
-@media (max-width: 768px) {
-    .nutrition-section {
-        padding: 30px 15px;
-    }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-    .nutrition-form {
-        padding: 15px;
-    }
-
-    .submit-button {
-        width: 100%;
-    }
-}
+.details-content { display: none; }
