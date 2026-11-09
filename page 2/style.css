@@ -1,25 +1,27 @@
-.muscle-section {
-    padding: 40px 20px;
-}
-
 .exercise-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-.exercise-card {
-    width: 100%;
-    padding: 20px;
+h2{
+    margin: 20px;
+}
 
+.exercise-card {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
 }
 
 .exercise-card img {
-    width: 500px;
-    height: auto;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
     border-radius: 8px;
 }
 
@@ -37,6 +39,10 @@
     color: var(--muted);
 }
 
+.exercise-card details {
+    margin-top: 20px;
+}
+
 .exercise-card summary {
     display: inline-block;
     background: var(--accent);
@@ -48,20 +54,4 @@
 
 .description {
     margin-top: 20px;
-}
-
-.home-button {
-    display: inline-block;
-    margin: 30px 10px;
-    padding: 10px 15px;
-
-    background: var(--accent);
-    color: black;
-
-    border-radius: 6px;
-}
-
-.home-button:hover {
-    background: var(--orange-hover);
-    color: black;
 }
