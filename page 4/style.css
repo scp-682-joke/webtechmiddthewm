@@ -3,11 +3,46 @@
 }
 
 .table-responsive {
+    position: relative;
+    isolation: isolate;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.plan-table {
+    position: relative;
+    z-index: 1;
+}
+
+.column-shine {
+    position: absolute;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.column-shine::before {
+    content: '';
+    position: absolute;
+    inset: -100% -100%;
+    background: linear-gradient(125deg, transparent 44%, rgba(235, 242, 246, .025) 47%, rgba(235, 242, 246, .12) 50%, rgba(235, 242, 246, .025) 53%, transparent 56%);
+    transform: translateX(-100%);
+}
+
+.shine-active .column-shine::before {
+    animation: column-shimmer 9s ease-in-out var(--shine-delay) infinite;
+}
+
+@keyframes column-shimmer {
+    0%, 12% { transform: translateX(-100%); }
+    48%, 100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shine-active .column-shine::before { animation: none; }
 }
 
 .plan-table {
@@ -34,6 +69,74 @@
 
 .plan-table tbody tr:hover {
     background: rgba(255, 255, 255, 0.05);
+}
+
+/* Tablet */
+.weekly-progress {
+    margin-bottom: 24px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.weekly-progress-heading {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.weekly-progress small, #weekly-progress-count {
+    color: var(--muted);
+}
+
+.weekly-progress-track {
+    height: 10px;
+    margin: 12px 0;
+    overflow: hidden;
+    background: var(--border);
+    border-radius: 10px;
+}
+
+.weekly-progress-fill {
+    width: 0;
+    height: 100%;
+    background: var(--accent);
+    border-radius: inherit;
+    transition: width 350ms ease;
+}
+
+.workout-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.workout-check input {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.plan-table tbody tr.is-today {
+    background: rgba(233, 107, 50, .1);
+}
+
+.plan-table tr.is-today th {
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+}
+
+.plan-table tr.is-complete .workout-check {
+    color: #90cfa3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .weekly-progress-fill { transition: none; }
 }
 
 /* Tablet */
