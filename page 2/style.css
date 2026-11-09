@@ -1,11 +1,48 @@
 .exercise-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 32px;
+    align-items: start;
 }
 
-h2{
-    margin: 20px;
+.muscle-section {
+    margin-block: 32px 48px;
+}
+
+.muscle-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 20px 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.muscle-heading h2 {
+    margin: 0;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    letter-spacing: .08em;
+}
+
+.anatomy-return {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    background: var(--surface);
+    font-size: .85rem;
+}
+
+.anatomy-return:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .exercise-card {
@@ -53,5 +90,68 @@ h2{
 }
 
 .description {
+    display: flow-root;
     margin-top: 20px;
+}
+
+.exercise-card summary::after {
+    content: ' +';
+}
+
+.exercise-card summary[aria-expanded="true"]::after {
+    content: ' −';
+}
+
+.muscle-filters {
+    margin: 32px 20px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.muscle-filters p { color: var(--muted); }
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.filter-buttons button {
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+.filter-buttons button:hover { border-color: var(--accent); }
+
+.filter-buttons button[aria-pressed="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--background);
+}
+
+#filter-status { margin: 0; font-size: .85rem; }
+
+@media (prefers-reduced-motion: reduce) {
+    .filter-buttons button { transition: none; }
+}
+
+.exercise-card summary:hover {
+    background: var(--orange-hover);
+}
+
+@media (max-width: 900px) {
+    .exercise-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 575px) {
+    .exercise-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
