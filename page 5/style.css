@@ -4,7 +4,7 @@
     text-align: center;
 }
 
-span{
+.calorie-guide span {
     color: var(--accent);
 }
 
@@ -37,7 +37,7 @@ span{
 
 .meal-plans {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 40px;
 
     max-width: 1100px;
@@ -92,4 +92,72 @@ span{
     text-align: center;
     font-size: 0.87rem;
     line-height: 1.6;
+}
+
+.section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding: 18px 22px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    text-align: left;
+    font: inherit;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    cursor: pointer;
+}
+
+.section-toggle:hover, .section-toggle[aria-expanded="true"] {
+    border-color: var(--accent);
+}
+
+.section-toggle span { color: var(--accent); }
+.meal-day { min-width: 0; }
+.meal-table-scroll { overflow-x: auto; max-width: 100%; }
+.nutrition-table { height: auto; min-width: 450px; }
+.nutrition-table td { overflow-wrap: anywhere; }
+.meal-builder { margin-top: 36px; }
+#builder-content { padding: 24px; background: var(--surface); border-radius: 10px; }
+.builder-note { color: var(--muted); font-size: .85rem; }
+.builder-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }
+.builder-field { display: flex; flex-direction: column; gap: 6px; }
+.builder-field label { font-size: .9rem; }
+.builder-field input, .builder-field select {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--background);
+    color: var(--text);
+    font: inherit;
+}
+.builder-field [aria-invalid="true"] { border-color: #ff9d99; }
+.field-error { color: #ff9d99; font-size: .8rem; }
+#meal-message { margin: 14px 0; }
+.meal-builder h3 { font-size: 1.3rem; margin-top: 28px; }
+.remove-meal { border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; background: var(--background); color: var(--text); cursor: pointer; }
+.remove-meal:hover { border-color: var(--accent); color: var(--accent); }
+#custom-plan .nutrition-table { min-width: 760px; }
+
+/* Tablet: stack the example plans and use two form columns. */
+@media (max-width: 991px) {
+    .meal-plans { grid-template-columns: 1fr; gap: 28px; padding: 0; margin-block: 28px; }
+    .builder-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nutrition-table th, .nutrition-table td { padding: 10px; }
+}
+
+/* Phone: one form column; tables scroll within their own containers. */
+@media (max-width: 575px) {
+    .builder-fields { grid-template-columns: 1fr; }
+    #builder-content { padding: 16px; }
+    .section-toggle { padding: 14px; gap: 12px; }
+    .meal-description { margin: 24px 0; }
+    .nutrition-table th, .nutrition-table td { padding: 8px; font-size: .85rem; }
+    #meal-form > .button { width: 100%; }
 }
