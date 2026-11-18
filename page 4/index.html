@@ -1,19 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Form Fitness</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="style.css">
-        <script src="plan.js" defer></script>
-    </head>
-    <body>
-        <header class="site-header">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FORM FITNESS — Workout Plan</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="plan.js" defer></script>
+</head>
+
+<body>
+    <header class="site-header">
         <nav class="container site-nav" aria-label="Main navigation">
-            <a class="brand" href="../index.html" aria-label="Form Fitness home"><span class="brand-mark" aria-hidden="true">f.</span> FORM <span class="brand-subtitle">FITNESS</span></a>
+            <a class="brand" href="../index.html" aria-label="FORM FITNESS home">
+                <span class="brand-mark" aria-hidden="true">f.</span>
+                FORM <span class="brand-subtitle">FITNESS</span>
+            </a>
+
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
                 <li><a href="../page 2/index.html">Info</a></li>
@@ -25,82 +33,230 @@
     </header>
 
     <main class="container my-5">
+
         <section id="plan" class="plan-section">
             <h1 class="text-center mb-3">Workout Plan</h1>
-            <p class="text-center mb-4">Your weekly schedule, split by muscle group.</p>
 
-            <div class="weekly-progress" hidden>
-                <p id="today-workouts"></p>
-                <div class="weekly-progress-heading">
-                    <strong id="weekly-progress-label">Weekly progress</strong>
-                    <span id="weekly-progress-count" role="status"></span>
-                </div>
-                <div class="weekly-progress-track" role="progressbar" aria-labelledby="weekly-progress-label" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0">
-                    <div class="weekly-progress-fill"></div>
-                </div>
-                <small id="progress-storage-note">Check off each workout as you finish. Saved in this browser; resets each Monday.</small>
-            </div>
+            <p class="text-center mb-4">
+                Your weekly schedule, split by muscle group.
+                Complete your exercises and track your progress.
+            </p>
 
             <div class="table-responsive">
                 <table class="table plan-table">
-                    <caption class="visually-hidden">Weekly workout schedule</caption>
+                    <caption class="visually-hidden">
+                        Weekly workout schedule
+                    </caption>
+
                     <thead>
                         <tr>
                             <th scope="col">Day</th>
-                            <th scope="col">Muscle group</th>
+                            <th scope="col">Muscle Group</th>
                             <th scope="col">Exercise</th>
                             <th scope="col">Sets / Reps</th>
+                            <th scope="col">Completed</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <tr>
                             <th scope="row">Monday</th>
                             <td>Legs</td>
                             <td>Barbell Squat</td>
                             <td>4 x 8</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="squat"
+                                       data-group="Legs"
+                                       aria-label="Complete Barbell Squat">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Monday</th>
                             <td>Legs</td>
                             <td>Dumbbell Lunge</td>
                             <td>3 x 12</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="lunge"
+                                       data-group="Legs"
+                                       aria-label="Complete Dumbbell Lunge">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Tuesday</th>
                             <td>Abs</td>
                             <td>Crunch</td>
                             <td>3 x 15</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="crunch-tuesday"
+                                       data-group="Abs"
+                                       aria-label="Complete Tuesday Crunch">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Wednesday</th>
                             <td>Arms</td>
                             <td>Dumbbell Bicep Curl</td>
                             <td>3 x 12</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="bicep-curl"
+                                       data-group="Arms"
+                                       aria-label="Complete Dumbbell Bicep Curl">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Wednesday</th>
                             <td>Arms</td>
                             <td>Parallel Bar Dips</td>
                             <td>3 x 10</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="dips"
+                                       data-group="Arms"
+                                       aria-label="Complete Parallel Bar Dips">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Thursday</th>
                             <td>Arms</td>
                             <td>Dumbbell Shoulder Press</td>
                             <td>3 x 10</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="shoulder-press"
+                                       data-group="Arms"
+                                       aria-label="Complete Dumbbell Shoulder Press">
+                            </td>
                         </tr>
+
                         <tr>
                             <th scope="row">Friday</th>
                             <td>Abs</td>
                             <td>Crunch</td>
                             <td>4 x 15</td>
+                            <td>
+                                <input type="checkbox"
+                                       class="workout-checkbox"
+                                       data-id="crunch-friday"
+                                       data-group="Abs"
+                                       aria-label="Complete Friday Crunch">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-    </main>
 
-    <footer class="container site-footer"><p>FORM FITNESS <span>Build knowledge. Build strength.</span></p><p>A mindful approach to movement.</p></footer>
+        <section class="dashboard-section"
+                 aria-labelledby="dashboardTitle">
+
+            <h2 id="dashboardTitle" class="text-center mb-4">
+                Workout Statistics Dashboard
+            </h2>
+
+            <p class="text-center mb-4">
+                Monitor your weekly fitness performance.
+            </p>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h3>Total Workouts</h3>
+                    <p id="totalWorkouts">7</p>
+                    <span>Scheduled exercises</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <p id="completedWorkouts">0</p>
+                    <span>Finished exercises</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Remaining</h3>
+                    <p id="remainingWorkouts">7</p>
+                    <span>Exercises left</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Weekly Completion</h3>
+                    <p id="weeklyPercentage">0%</p>
+                    <span>Overall progress</span>
+                </div>
+
+            </div>
+
+            <div class="progress-panel">
+                <div class="progress-heading">
+                    <h3>Weekly Progress</h3>
+                    <span id="progressLabel">0 of 7 completed</span>
+                </div>
+
+                <div class="progress-track"
+                     id="weeklyProgress"
+                     role="progressbar"
+                     aria-label="Weekly workout completion"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     aria-valuenow="0">
+
+                    <div id="weeklyProgressFill"></div>
+                </div>
+            </div>
+
+            <div class="chart-panel">
+                <h3>Completion by Muscle Group</h3>
+
+                <p>
+                    Track how many exercises you have completed
+                    for each muscle group.
+                </p>
+
+                <div id="muscleChart"></div>
+            </div>
+
+        </section>
+
+        <section class="weekly-history-section"
+                 aria-labelledby="historyTitle">
+
+            <div class="history-header">
+                <div>
+                    <h2 id="historyTitle">Weekly History</h2>
+                    <p>Review your progress from previous weeks.</p>
+                </div>
+
+                <button type="button"
+                        id="resetWeekBtn"
+                        class="reset-week-btn">
+                    Reset Current Week
+                </button>
+            </div>
+
+            <p id="storageMessage"
+               role="status"
+               aria-live="polite"></p>
+
+            <div id="weeklyHistory">
+                <p>No previous weekly records yet.</p>
+            </div>
+
+        </section>
+
+    </main>
 </body>
 </html>
