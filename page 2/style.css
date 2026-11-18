@@ -5,6 +5,28 @@
     align-items: start;
 }
 
+.api-exercises { margin-block: 48px; }
+.api-controls { display: flex; flex-wrap: wrap; gap: 16px; margin-block: 24px; }
+.api-controls label { flex: 1 1 200px; min-width: 0; }
+.api-controls input, .api-controls select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+}
+.api-exercises .button { margin-top: 20px; }
+.api-exercises [hidden] { display: none; }
+.api-exercises button:disabled { opacity: .6; cursor: wait; }
+.api-exercises a { text-decoration: underline; }
+.api-card { min-width: 0; overflow-wrap: anywhere; }
+.api-card details p { margin-top: 16px; white-space: pre-line; }
+.api-card details[open] summary::after { content: ' −'; }
+.api-card small { margin-top: 20px; color: var(--muted); }
+
 .muscle-section {
     margin-block: 32px 48px;
 }
@@ -103,12 +125,21 @@
 }
 
 .muscle-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
     margin: 32px 20px;
     padding: 20px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
 }
+
+.muscle-filters[hidden] { display: none; }
+.muscle-filters .filter-buttons { margin-bottom: 0; }
+.muscle-filters .api-jump { margin-left: auto; }
+.muscle-filters #filter-status { flex-basis: 100%; }
 
 .muscle-filters p { color: var(--muted); }
 

@@ -11,6 +11,7 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
         <script src="info.js" defer></script>
         <script src="filters.js" defer></script>
+        <script src="exercise-api.js" defer></script>
     </head>
     <body>
         <header class="site-header">
@@ -32,6 +33,7 @@
             <button type="button" data-muscle-filter="legs" aria-pressed="false">Legs</button>
             <button type="button" data-muscle-filter="abs" aria-pressed="false">Abs</button>
         </div>
+        <a class="button api-jump" href="#api-exercises">Explore more exercises ↓</a>
         <p id="filter-status" role="status">6 exercises · All muscle groups</p>
     </section>
 
@@ -276,6 +278,21 @@
     </div>
 
 </section>
+    <section id="api-exercises" class="container api-exercises" aria-labelledby="api-heading">
+        <h2 id="api-heading">Explore More Exercises</h2>
+        <p>Explore up to 15 English exercises from <a href="https://wger.de">wger</a>, focusing on abs, legs, and arms.</p>
+        <div class="api-controls">
+            <label>Search exercises<input id="api-search" type="search" placeholder="Name or instructions"></label>
+            <label>Muscle group<select id="api-muscle"><option value="all">All muscles</option></select></label>
+            <label>Sort by<select id="api-sort"><option value="asc">Name: A–Z</option><option value="desc">Name: Z–A</option></select></label>
+        </div>
+        <p id="api-status" role="status" aria-live="polite"></p>
+        <p id="api-count" role="status"></p>
+        <div id="api-results" class="exercise-grid" aria-busy="false"></div>
+        <button id="api-retry" class="button" type="button" hidden>Retry</button>
+        <button id="api-more" class="button" type="button" hidden>Load more exercises</button>
+        <noscript>Enable JavaScript to explore exercises from wger.</noscript>
+    </section>
     <footer class="container site-footer"><p>FORM FITNESS <span>Build knowledge. Build strength.</span></p><p>A mindful approach to movement.</p></footer>
 </body>
 </html>
