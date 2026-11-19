@@ -47,7 +47,7 @@
             const details = element('details', '');
             details.append(element('summary', 'Instructions'), element('p', this.description || 'No instructions supplied.'));
             const source = element('a', 'Source and license on wger');
-            source.href = `https://wger.de/en/exercise/${this.id}/view/`;
+            source.href = `https://wger.de/en/exercise/${this.id}/view`;
             card.append(details, element('small', `By ${this.author}`), source);
             return card;
         }
