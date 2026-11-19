@@ -1,118 +1,269 @@
 'use strict';
 
-const mealPlan = [];
 const nutrientFields = ['calories', 'protein', 'fat', 'carbs'];
-const mealForm = document.getElementById('meal-form');
-const mealMessage = document.getElementById('meal-message');
+
+
+// ANIMATIONS
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-document.querySelectorAll('.section-toggle').forEach(button => {
-    const content = document.getElementById(button.getAttribute('aria-controls'));
-    button.addEventListener('click', () => {
-        const expanded = button.getAttribute('aria-expanded') !== 'true';
-        button.setAttribute('aria-expanded', String(expanded));
-        button.querySelector('span').textContent = expanded ? '−' : '+';
-        if (window.jQuery) {
-            const $content = window.jQuery(content);
-            if (content.hidden) {
-                $content.hide();
-                content.hidden = false;
-            }
-            $content.stop(true, false)[expanded ? 'slideDown' : 'slideUp'](motionPreference.matches ? 0 : 380);
-        } else {
-            content.hidden = !expanded;
-        }
-    });
+$('.section-toggle').on('click', function () {
+    const button = $(this);
+    const content = document.getElementById(button.attr('aria-controls'));
+    const expanded = button.attr('aria-expanded') !== 'true';
+    const duration = motionPreference.matches ? 0 : 380;
+
+    button.attr('aria-expanded', String(expanded));
+    button.find('span').text(expanded ? '−' : '+');
+
+    if (expanded) {
+        content.hidden = false;
+        $(content).hide().stop(true, false).slideDown(duration);
+    } else {
+        $(content).stop(true, false).slideUp(duration);
+    }
 });
 
+
+// FORM VALIDATION
 function showError(input, message) {
     input.setAttribute('aria-invalid', String(Boolean(message)));
-    document.getElementById(`${input.id}-error`).textContent = message;
+    $(`#${input.id}-error`).text(message);
 }
 
 function isValidInteger(value, minimum) {
-    return /^\d+$/.test(value) && Number.isSafeInteger(Number(value)) && Number(value) >= minimum && Number(value) <= 999999;
+    return /^\d+$/.test(value)
+        && Number.isSafeInteger(Number(value))
+        && Number(value) >= minimum
+        && Number(value) <= 999999;
 }
 
-// Keep text input so decimals, signs and scientific notation cannot bypass validation.
-document.querySelectorAll('[data-integer]').forEach(input => {
-    input.addEventListener('beforeinput', event => {
-        if (event.data && /\D/.test(event.data)) {
-            event.preventDefault();
-            showError(input, 'Use whole numbers only (no decimals or signs).');
-        }
-    });
-    input.addEventListener('input', () => {
-        if (/\D/.test(input.value)) {
-            input.value = input.dataset.lastValid || '';
-            showError(input, 'Use whole numbers only (no decimals or signs).');
-        } else {
-            input.dataset.lastValid = input.value;
-            showError(input, '');
-        }
-    });
+$('[data-integer]').on('beforeinput', function (event) {
+    const inputEvent = event.originalEvent;
+
+    if (inputEvent.data && /\D/.test(inputEvent.data)) {
+        event.preventDefault();
+        showError(this, 'Use whole numbers only.');
+    }
 });
 
-function calculateTotals(meals) {
-    const totals = { calories: 0, protein: 0, fat: 0, carbs: 0 };
-    meals.forEach(meal => nutrientFields.forEach(field => { totals[field] += meal[field]; }));
-    return totals;
+$('[data-integer]').on('input', function () {
+    if (/\D/.test(this.value)) {
+        this.value = this.dataset.lastValid || '';
+        showError(this, 'Use whole numbers only.');
+    } else {
+        this.dataset.lastValid = this.value;
+        showError(this, '');
+    }
+});
+
+
+// CLASS: ONE MEAL
+class Meal {
+    constructor(type, food, calories, protein, fat, carbs) {
+        this.type = type;
+        this.food = food;
+        this.calories = calories;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+    }
 }
 
-function renderPlan() {
-    const body = document.getElementById('custom-meals');
-    body.replaceChildren();
-    mealPlan.forEach((meal, index) => {
-        const row = document.createElement('tr');
-        [meal.meal, meal.food, ...nutrientFields.map(field => meal[field])].forEach(value => {
-            const cell = document.createElement('td');
-            cell.textContent = value;
-            row.appendChild(cell);
+
+// CLASS: MEAL PLAN
+class MealPlan {
+    constructor() {
+        this.meals = [];
+        this.load();
+        this.render();
+    }
+
+    addMeal(meal) {
+        this.meals.push(meal);
+        this.save();
+        this.render();
+    }
+
+    calculateTotals() {
+        const totals = {
+            calories: 0,
+            protein: 0,
+            fat: 0,
+            carbs: 0
+        };
+
+        this.meals.forEach(meal => {
+            nutrientFields.forEach(field => {
+                totals[field] += meal[field];
+            });
         });
-        const action = document.createElement('td');
-        const remove = document.createElement('button');
-        remove.type = 'button';
-        remove.className = 'remove-meal';
-        remove.textContent = 'Remove';
-        remove.setAttribute('aria-label', `Remove ${meal.food} from ${meal.meal}`);
-        remove.addEventListener('click', () => {
-            mealPlan.splice(index, 1);
-            renderPlan();
-            mealMessage.textContent = `${meal.food} removed. Totals updated.`;
-            const remaining = body.querySelectorAll('button');
-            (remaining[Math.min(index, remaining.length - 1)] || document.getElementById('food')).focus();
+
+        return totals;
+    }
+
+    reset() {
+    this.meals = [];
+    this.save();
+    this.render();
+    }
+
+
+
+    // NEW TABLE
+    render() {
+        const groups = {
+            Breakfast: [],
+            Lunch: [],
+            Dinner: [],
+            Other: []
+        };
+
+        // MEALS FOR EACH CATEGORY
+        this.meals.forEach(meal => {
+            switch (meal.type) {
+                case 'Breakfast':
+                    groups.Breakfast.push(meal);
+                    break;
+
+                case 'Lunch':
+                    groups.Lunch.push(meal);
+                    break;
+
+                case 'Dinner':
+                    groups.Dinner.push(meal);
+                    break;
+
+                case 'Other':
+                    groups.Other.push(meal);
+                    break;
+            }
         });
-        action.appendChild(remove);
-        row.appendChild(action);
-        body.appendChild(row);
-    });
-    const totals = calculateTotals(mealPlan);
-    nutrientFields.forEach(field => { document.getElementById(`total-${field}`).textContent = totals[field]; });
-    document.getElementById('custom-plan').hidden = mealPlan.length === 0;
-    document.getElementById('empty-plan').hidden = mealPlan.length !== 0;
+
+        // FILLING TABLE
+        Object.keys(groups).forEach(type => {
+            const key = type.toLowerCase();
+            const meals = groups[type];
+
+            // Food names
+            $(`#foods-${key}`).text(
+                meals.length
+                    ? meals.map(meal => meal.food).join(', ')
+                    : '—'
+            );
+
+            // Nutrients for each category
+            nutrientFields.forEach(field => {
+                const total = meals.reduce(
+                    (sum, meal) => sum + meal[field], 0
+                );
+
+                $(`#${field}-${key}`).text(total);
+            });
+        });
+
+        // Overall daily totals
+        const totals = this.calculateTotals();
+
+        nutrientFields.forEach(field => {
+            $(`#total-${field}`).text(totals[field]);
+        });
+    }
+
+
+    // LOCAL STORAGE: SAVE
+    save() {
+        localStorage.setItem('mealPlan', JSON.stringify(this.meals));
+    }
+
+
+    // LOCAL STORAGE: LOAD
+    load() {
+        const saved = localStorage.getItem('mealPlan');
+
+        if (saved) {
+            try {
+                const data = JSON.parse(saved);
+
+                if (!Array.isArray(data)) {
+                    throw new Error('Invalid meal data');
+                }
+
+                this.meals = data.map(meal => new Meal(
+                    meal.type,
+                    meal.food,
+                    meal.calories,
+                    meal.protein,
+                    meal.fat,
+                    meal.carbs
+                ));
+            } catch {
+                this.meals = [];
+            }
+        }
+    }
 }
 
-mealForm.addEventListener('submit', event => {
+
+// CREATE MEAL PLAN OBJECT
+const mealPlan = new MealPlan();
+
+
+// FORM: ADD NEW MEAL
+$('#meal-form').on('submit', function (event) {
     event.preventDefault();
+
     const food = document.getElementById('food');
-    showError(food, food.value.trim() ? '' : 'Enter a food or dish name.');
+
+    showError(
+        food,
+        food.value.trim() ? '' : 'Enter a food or dish name.'
+    );
+
     nutrientFields.forEach(field => {
         const input = document.getElementById(field);
         const minimum = Number(input.dataset.min);
-        showError(input, isValidInteger(input.value, minimum) ? '' : `Enter a whole number from ${minimum} to 999999.`);
+
+        showError(
+            input,
+            isValidInteger(input.value, minimum)
+                ? ''
+                : `Enter a whole number from ${minimum} to 999999.`
+        );
     });
-    const invalid = mealForm.querySelector('[aria-invalid="true"]');
+
+    const invalid = this.querySelector('[aria-invalid="true"]');
+
     if (invalid) {
-        mealMessage.textContent = 'Please correct the highlighted fields.';
+        $('#meal-message').text('Please correct the highlighted fields.');
         invalid.focus();
         return;
     }
-    const meal = { meal: document.getElementById('meal').value, food: food.value.trim() };
-    nutrientFields.forEach(field => { meal[field] = Number(document.getElementById(field).value); });
-    mealPlan.push(meal);
-    renderPlan();
-    mealForm.reset();
-    nutrientFields.forEach(field => { document.getElementById(field).dataset.lastValid = ''; });
-    mealMessage.textContent = `${meal.food} added. Totals updated.`;
+
+    // Create a new Meal object
+    const meal = new Meal(
+        $('#meal').val(),
+        food.value.trim(),
+        ...nutrientFields.map(field =>
+            Number($(`#${field}`).val())
+        )
+    );
+
+    // Add meal to the plan
+    mealPlan.addMeal(meal);
+
+    this.reset();
+
+    $('[data-integer]').each(function () {
+        this.dataset.lastValid = '';
+    });
+
+    $('#meal-message').text(`${meal.food} added. Totals updated.`);
     food.focus();
+});
+
+// RESET PLAN
+$('#reset-plan').on('click', function () {
+    if (confirm('Are you sure you want to delete your entire meal plan?')) {
+        mealPlan.reset();
+    }
 });
