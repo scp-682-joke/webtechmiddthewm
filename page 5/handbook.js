@@ -1,3 +1,4 @@
+
 'use strict';
 
 const nutrientFields = ['calories', 'protein', 'fat', 'carbs'];
@@ -19,41 +20,43 @@ $('.section-toggle').on('click', function () {
         content.hidden = false;
         $(content).hide().stop(true, false).slideDown(duration);
     } else {
-        $(content).stop(true, false).slideUp(duration);
+        $(content).stop(true, false).slideUp(duration, function () {
+            content.hidden = true;
+        });
     }
 });
 
 
 // FORM VALIDATION
-function showError(input, message) {
-    input.setAttribute('aria-invalid', String(Boolean(message)));
-    $(`#${input.id}-error`).text(message);
-}
+function validateForm() {
+    let valid = true;
 
-function isValidInteger(value, minimum) {
-    return /^\d+$/.test(value)
-        && Number.isSafeInteger(Number(value))
-        && Number(value) >= minimum
-        && Number(value) <= 999999;
-}
+    let food = $('#food').val().trim();
 
-$('[data-integer]').on('beforeinput', function (event) {
-    const inputEvent = event.originalEvent;
-
-    if (inputEvent.data && /\D/.test(inputEvent.data)) {
-        event.preventDefault();
-        showError(this, 'Use whole numbers only.');
-    }
-});
-
-$('[data-integer]').on('input', function () {
-    if (/\D/.test(this.value)) {
-        this.value = this.dataset.lastValid || '';
-        showError(this, 'Use whole numbers only.');
+    if (food.length < 2) {
+        $('#food').addClass('is-invalid');
+        valid = false;
     } else {
-        this.dataset.lastValid = this.value;
-        showError(this, '');
+        $('#food').removeClass('is-invalid');
     }
+
+    nutrientFields.forEach(field => {
+        let value = $(`#${field}`).val();
+
+        if (value === '' || isNaN(value) || Number(value) < 0) {
+            $(`#${field}`).addClass('is-invalid');
+            valid = false;
+        } else {
+            $(`#${field}`).removeClass('is-invalid');
+        }
+    });
+
+    return valid;
+}
+
+
+$('#meal-form input').on('input', function () {
+    $(this).removeClass('is-invalid');
 });
 
 
@@ -102,14 +105,12 @@ class MealPlan {
     }
 
     reset() {
-    this.meals = [];
-    this.save();
-    this.render();
+        this.meals = [];
+        this.save();
+        this.render();
     }
 
 
-
-    // NEW TABLE
     render() {
         const groups = {
             Breakfast: [],
@@ -118,7 +119,6 @@ class MealPlan {
             Other: []
         };
 
-        // MEALS FOR EACH CATEGORY
         this.meals.forEach(meal => {
             switch (meal.type) {
                 case 'Breakfast':
@@ -139,7 +139,6 @@ class MealPlan {
             }
         });
 
-        // FILLING TABLE
         Object.keys(groups).forEach(type => {
             const key = type.toLowerCase();
             const meals = groups[type];
@@ -161,7 +160,6 @@ class MealPlan {
             });
         });
 
-        // Overall daily totals
         const totals = this.calculateTotals();
 
         nutrientFields.forEach(field => {
@@ -170,13 +168,11 @@ class MealPlan {
     }
 
 
-    // LOCAL STORAGE: SAVE
+    // LOCAL STORAGE
     save() {
         localStorage.setItem('mealPlan', JSON.stringify(this.meals));
     }
 
-
-    // LOCAL STORAGE: LOAD
     load() {
         const saved = localStorage.getItem('mealPlan');
 
@@ -204,7 +200,6 @@ class MealPlan {
 }
 
 
-// CREATE MEAL PLAN OBJECT
 const mealPlan = new MealPlan();
 
 
@@ -212,58 +207,30 @@ const mealPlan = new MealPlan();
 $('#meal-form').on('submit', function (event) {
     event.preventDefault();
 
-    const food = document.getElementById('food');
-
-    showError(
-        food,
-        food.value.trim() ? '' : 'Enter a food or dish name.'
-    );
-
-    nutrientFields.forEach(field => {
-        const input = document.getElementById(field);
-        const minimum = Number(input.dataset.min);
-
-        showError(
-            input,
-            isValidInteger(input.value, minimum)
-                ? ''
-                : `Enter a whole number from ${minimum} to 999999.`
-        );
-    });
-
-    const invalid = this.querySelector('[aria-invalid="true"]');
-
-    if (invalid) {
+    if (!validateForm()) {
         $('#meal-message').text('Please correct the highlighted fields.');
-        invalid.focus();
         return;
     }
 
-    // Create a new Meal object
     const meal = new Meal(
         $('#meal').val(),
-        food.value.trim(),
-        ...nutrientFields.map(field =>
-            Number($(`#${field}`).val())
-        )
+        $('#food').val().trim(),
+        ...nutrientFields.map(field => Number($(`#${field}`).val()))
     );
 
-    // Add meal to the plan
     mealPlan.addMeal(meal);
 
     this.reset();
 
-    $('[data-integer]').each(function () {
-        this.dataset.lastValid = '';
-    });
-
     $('#meal-message').text(`${meal.food} added. Totals updated.`);
-    food.focus();
+    $('#food').focus();
 });
+
 
 // RESET PLAN
 $('#reset-plan').on('click', function () {
     if (confirm('Are you sure you want to delete your entire meal plan?')) {
         mealPlan.reset();
+        $('#meal-message').text('Your meal plan has been reset.');
     }
 });
